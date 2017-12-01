@@ -17,8 +17,8 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 import shutil
-checkpoint_dir = './cnncheckpoint/'
-checkpoint_prefix = os.path.join(checkpoint_dir, 'model')
+trained_dir = './cnncheckpoint/'
+checkpoint_prefix = os.path.join(trained_dir, 'model')
 
 import cv2
 
@@ -44,43 +44,22 @@ x = tf.placeholder(tf.float32, [None, 784])
 #y_ = tf.placeholder(tf.float32, [None, 10])
 x_image = tf.reshape(x, [-1,28,28,1])
                         
+
+keep_prob = tf.placeholder(tf.float32)
+
 W_conv1 = weight_variable([5, 5, 1, 32])
+X_conv1 = weight_variable([5, 5, 1, 32])
 b_conv1 = bias_variable([32])
 h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
 h_pool1 = max_pool_2x2(h_conv1)
-
-W_conv2 = weight_variable([5, 5, 32, 64])
-b_conv2 = bias_variable([64])
-h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
-h_pool2 = max_pool_2x2(h_conv2)
-
-W_fc1 = weight_variable([7 * 7 * 64, 1024])
-b_fc1 = bias_variable([1024])
-h_pool2_flat = tf.reshape(h_pool2, [-1, 7*7*64])
-h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
-
-keep_prob = tf.placeholder(tf.float32)
-h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
-
-W_fc2 = weight_variable([1024, 10])
-b_fc2 = bias_variable([10])
-
-y_conv = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
-result = tf.argmax(y_conv,1)
 
 #saver = tf.train.import_meta_graph("./cnncheckpoint/model-20000.meta")
 saver = tf.train.Saver()
 tf.global_variables_initializer().run()
 
-ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
+ckpt = tf.train.get_checkpoint_state(trained_dir)
 if ckpt and ckpt.model_checkpoint_path:
     #print('debug')
     #print(ckpt.model_checkpoint_path)
-    saver.restore(sess, tf.train.latest_checkpoint(checkpoint_dir))
-for i in range(20):
-    img = cv2.imread('./mnistimg/mnist_' + str(i) + '.jpg',0)
-    batch_xs = img.reshape((1,784))
-    maxNum = max(batch_xs[0])
-    batch_xs = batch_xs / maxNum
-    numpre = sess.run(result, feed_dict={x: batch_xs,keep_prob:1})
-    print('predit number is : %d' %(numpre[0]))    
+    saver.restore(sess, tf.train.latest_checkpoint('./cnncheckpoint/'))
+    print(sess.run(W_conv1))

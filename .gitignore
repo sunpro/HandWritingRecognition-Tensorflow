@@ -3,4 +3,7 @@
 /dist
 /img
 /mnistimg
+/blog
+/cnncheckpoint
+/cnncheckpoint1201
 *.jpg
