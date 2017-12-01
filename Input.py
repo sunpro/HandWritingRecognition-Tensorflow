@@ -20,7 +20,7 @@ def OnMouseMove(event, x, y, flag, userdata):
         #print('x:%d,y:%d'%(x,y),mousedown)
         #cv2.line(frame, (0, 0), (100, 100), (255, 0, 0)) # 蓝色线为测量值     
         
-    if event == cv2.EVENT_MOUSEMOVE and flag == cv2.EVENT_FLAG_LBUTTON: 
+    if flag == cv2.EVENT_FLAG_LBUTTON: 
         #print('鼠标移动事件！')
         #print('x:%d,y:%d'%(x,y))
         last_measurement = current_measurement # 把当前测量存储为上一次测量
@@ -35,11 +35,12 @@ def OnMouseMove(event, x, y, flag, userdata):
 cv2.namedWindow("Input Number:")
 #opencv采用setMouseCallback函数处理鼠标事件，具体事件必须由回调（事件）函数的第一个参数来处理，该参数确定触发事件的类型（点击、移动等）
 cv2.setMouseCallback("Input Number:", OnMouseMove)
+timestack = str(int(time.time()))[-6:-1]
 key = 0
 while key != ord('q'):
     cv2.imshow("Input Number:", frame)
     key = cv2.waitKey(1) & 0xFF
-cv2.imwrite('number.jpg',frame)
+cv2.imwrite('number'+timestack + '.jpg',frame)
 #cv2.destroyWindow('Input Number:')
-print('number image has been stored and named "number.jpg"')
+print('number image has been stored and named "number' + timestack + '.jpg"')
 cv2.destroyAllWindows()
