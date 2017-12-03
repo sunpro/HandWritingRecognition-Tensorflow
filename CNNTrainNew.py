@@ -71,6 +71,7 @@ W_fc2 = tf.get_variable('W_fc2',[1024,10],initializer=tf.truncated_normal_initia
 b_fc2 = tf.get_variable('b_fc2',[10],initializer=tf.constant_initializer(0.1))
 y_conv = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
 result = tf.argmax(y_conv,1)
+
 saver = tf.train.Saver()
 #cross emtropy
 cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y_conv), reduction_indices=[1]))

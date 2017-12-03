@@ -8,7 +8,7 @@ import numpy as np
 import os
 
 #import the image
-img = cv2.imread('number.jpg',1)
+img = cv2.imread('./img/number.jpg',1)
 #cv2.imshow('img',img)
 #转化为灰度图
 img_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) 
@@ -125,7 +125,7 @@ for m in p[1:-2]: #因为8邻域，所以排除
             saimg = saveRect(img,mleft,ntop,mright,nbottom)
             cv2.imshow('subimg' + str(count), saimg)
             res = cv2.resize(saimg,(28, 28), interpolation = cv2.INTER_AREA )
-            cv2.imwrite('./img/num1647' + str(count) + '.jpg',res)
+            cv2.imwrite('./img/num1202' + str(count) + '.jpg',res)
             count = count + 1
 
 cv2.waitKey()

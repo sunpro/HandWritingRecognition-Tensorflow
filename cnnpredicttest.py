@@ -55,7 +55,8 @@ h_pool1 = max_pool_2x2(h_conv1)
 
 #saver = tf.train.import_meta_graph("./cnncheckpoint/model-20000.meta")
 saver = tf.train.Saver()
-tf.global_variables_initializer().run()
+#Note that when you restore variables from a file you do not have to initialize them beforehand
+#tf.global_variables_initializer().run()
 
 ckpt = tf.train.get_checkpoint_state(trained_dir)
 if ckpt and ckpt.model_checkpoint_path:
