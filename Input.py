@@ -5,6 +5,7 @@
 import cv2;
 import numpy as np
 import time
+import os
 
 # 创建一个空帧，定义(700, 700, 3)画图区域
 frame = np.zeros((600, 600, 3), np.uint8) 
@@ -44,3 +45,10 @@ cv2.imwrite('number'+timestack + '.jpg',frame)
 #cv2.destroyWindow('Input Number:')
 print('number image has been stored and named "number' + timestack + '.jpg"')
 cv2.destroyAllWindows()
+
+if os.path.exists('./HandWritingFileName.txt'):
+    shutil.rmtree('./HandWritingFileName.txt')
+filename = open('./HandWritingFileName.txt', 'w')
+filename.write('number'+timestack + '.jpg')
+filename.close()
+print('the image name has been stored in HnadWritingFileName.txt ')

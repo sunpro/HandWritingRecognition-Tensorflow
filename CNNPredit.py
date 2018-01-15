@@ -70,7 +70,7 @@ result = tf.argmax(y_conv,1)
 
 #saver = tf.train.import_meta_graph("./cnncheckpoint/model-20000.meta")
 saver = tf.train.Saver()
-tf.global_variables_initializer().run()
+#tf.global_variables_initializer().run()
 
 ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
 if ckpt and ckpt.model_checkpoint_path:
@@ -78,7 +78,7 @@ if ckpt and ckpt.model_checkpoint_path:
     #print(ckpt.model_checkpoint_path)
     saver.restore(sess, tf.train.latest_checkpoint(checkpoint_dir))
 for i in range(20):
-    img = cv2.imread('./mnistimg/mnist_' + str(i) + '.jpg',0)
+    img = cv2.imread('./img/num1647' + str(i) + '.jpg',0)
     batch_xs = img.reshape((1,784))
     maxNum = max(batch_xs[0])
     batch_xs = batch_xs / maxNum

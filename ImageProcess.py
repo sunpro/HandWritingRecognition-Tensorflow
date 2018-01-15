@@ -8,7 +8,11 @@ import numpy as np
 import os
 
 #import the image
-img = cv2.imread('./img/number.jpg',1)
+f = open('HandWritingFileName.txt', 'r')              #文件为123.txt
+
+FileName = f.read()  #按行读出文件内容
+f.close()
+img = cv2.imread(FileName,1)
 #cv2.imshow('img',img)
 #转化为灰度图
 img_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) 
